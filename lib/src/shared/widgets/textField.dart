@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:login_signin_screens/src/core/constants/appColors.dart';
 
 class TxtField extends StatelessWidget {
   final String labelText;
@@ -12,7 +13,7 @@ class TxtField extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Appcolors.whiteColor,
         borderRadius: BorderRadius.circular(10),
         border: Border.all(color: Colors.grey.shade400),
       ),
