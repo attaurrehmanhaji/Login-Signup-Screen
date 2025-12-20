@@ -5,17 +5,23 @@ class TxtField extends StatelessWidget {
   final String labelText;
   final String hintText;
   final bool obscureText;
+  final TextEditingController controller;
 
-  const TxtField(this.labelText, this.hintText, this.obscureText, {super.key});
-
+  const TxtField(
+    this.labelText,
+    this.hintText,
+    this.obscureText, {
+    super.key,
+    required this.controller,
+  });
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(bottom: 20),
       decoration: BoxDecoration(
-        color: Appcolors.whiteColor,
+        color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Colors.grey.shade400),
+        border: Border.all(color: AppColors.grayColor),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,6 +38,7 @@ class TxtField extends StatelessWidget {
             ),
           ),
           TextField(
+            controller: controller,
             obscureText: obscureText,
             decoration: InputDecoration(
               contentPadding: const EdgeInsets.symmetric(
@@ -39,7 +46,7 @@ class TxtField extends StatelessWidget {
                 horizontal: 20,
               ),
               hintText: hintText,
-              hintStyle: TextStyle(color: Colors.grey.shade500),
+              hintStyle: TextStyle(color: AppColors.grayColor),
               border: InputBorder.none,
             ),
           ),
