@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:login_signin_screens/src/core/constants/appColors.dart';
+import 'package:login_signin_screens/src/features/Auth/login.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -9,18 +10,32 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  initState() async {
+    super.initState();
+    Future.delayed(
+      Duration(milliseconds: 2000),
+      await Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => LoginScreen()),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffFFFFFF),
+      backgroundColor: AppColors.orangeColor,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Center(
-            child: Image.asset(
-              'assets/civicbeacon_logo.png',
-              height: 200.h, // responsive height
-              width: 200.w, // responsive width
+            child: Text(
+              'Please Wait...',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 40,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ],
