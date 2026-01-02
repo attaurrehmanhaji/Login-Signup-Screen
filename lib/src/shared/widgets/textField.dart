@@ -19,7 +19,7 @@ class TxtField extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 20),
       decoration: BoxDecoration(
-        color: AppColors.whiteColor,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(10),
         border: Border.all(color: AppColors.grayColor),
       ),
@@ -30,10 +30,10 @@ class TxtField extends StatelessWidget {
             padding: const EdgeInsets.only(left: 20, top: 10),
             child: Text(
               labelText,
-              style: const TextStyle(
+              style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
-                color: Colors.black,
+                color: Theme.of(context).textTheme.bodyLarge?.color,
               ),
             ),
           ),

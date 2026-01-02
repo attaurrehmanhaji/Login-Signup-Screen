@@ -46,13 +46,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
+
             Container(
               margin: EdgeInsets.only(top: 150),
               width: double.infinity,
               height: double.infinity,
               clipBehavior: Clip.hardEdge,
               decoration: BoxDecoration(
-                color: AppColors.whiteColor,
+                color: Theme.of(context).colorScheme.surface,
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(50)),
               ),
               child: ListView(
@@ -120,7 +121,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           fontSize: 17,
                           fontWeight: FontWeight.w500,
                           decoration: TextDecoration.underline,
-                          decorationColor: Colors.black,
+                          decorationColor: Theme.of(
+                            context,
+                          ).textTheme.bodyMedium?.color,
                           decorationThickness: 2,
                         ),
                       ),
