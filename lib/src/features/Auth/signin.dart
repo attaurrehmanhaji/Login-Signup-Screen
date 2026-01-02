@@ -58,7 +58,7 @@ class _SigninScreenState extends State<SigninScreen> {
             height: double.infinity,
             clipBehavior: Clip.hardEdge,
             decoration: BoxDecoration(
-              color: AppColors.whiteColor,
+              color: Theme.of(context).colorScheme.surface,
               borderRadius: BorderRadius.only(topLeft: Radius.circular(50)),
             ),
             child: ListView(

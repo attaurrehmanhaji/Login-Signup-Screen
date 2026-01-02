@@ -62,7 +62,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
             height: 280,
             width: double.infinity,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Theme.of(context).cardColor,
               borderRadius: BorderRadius.circular(20),
             ),
             child: Column(
@@ -73,7 +73,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
 
                   style: TextStyle(
                     fontSize: 16,
-                    color: Colors.black,
+                    // color: Colors.black, // Removed to use default theme color
                     fontWeight: FontWeight.w600,
                   ),
                 ),
