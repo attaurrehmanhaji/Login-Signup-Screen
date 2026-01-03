@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:login_signin_screens/src/core/constants/appAssets.dart';
 import 'package:login_signin_screens/src/core/constants/appColors.dart';
 import 'package:login_signin_screens/src/features/Auth/login.dart';
 
@@ -10,9 +11,10 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  initState() async {
+  @override
+  void initState() {
     super.initState();
-    Future.delayed(const Duration(milliseconds: 2000), () {
+    Future.delayed(const Duration(seconds: 2), () {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => LoginScreen()),
@@ -26,18 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
       backgroundColor: AppColors.orangeColor,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Center(
-            child: Text(
-              'Please Wait...',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 40,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ],
+        children: [Center(child: Image.asset(appLogo))],
       ),
     );
   }
