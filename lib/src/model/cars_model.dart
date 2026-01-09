@@ -1,10 +1,10 @@
-
 class CarsModel {
   final String name;
-  final double model;
+  final int model;
   final String color;
   final String brand;
   final String photo;
+  final bool sold;
 
   CarsModel({
     required this.name,
@@ -12,7 +12,6 @@ class CarsModel {
     required this.color,
     required this.model,
     required this.photo,
+    required this.sold,
   });
-
-
 }
