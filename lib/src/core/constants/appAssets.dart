@@ -1,1 +1,1 @@
-final appLogo = 'assets/appLogo.png';
+final appLogo = 'assets/logo.png';
