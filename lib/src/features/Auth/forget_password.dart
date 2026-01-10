@@ -79,9 +79,9 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 ),
                 SizedBox(height: 10),
                 TxtField(
-                  'email',
-                  'Login@abc.com',
-                  false,
+                  labelText: 'email',
+                  hintText: 'Login@abc.com',
+                  obscureText: false,
                   controller: emailController,
                 ),
                 AppButtan(btnText: 'Send', onTap: () {}),

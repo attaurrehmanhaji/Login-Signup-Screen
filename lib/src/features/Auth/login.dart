@@ -36,9 +36,9 @@ class _LoginScreenState extends State<LoginScreen> {
             Positioned(
               top: 50,
               left: 20,
-
               child: Text(
                 "Welcome back",
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 40,
@@ -57,30 +57,29 @@ class _LoginScreenState extends State<LoginScreen> {
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(50)),
               ),
               child: ListView(
-                padding: EdgeInsets.only(left: 20, right: 20, bottom: 25),
+                padding: EdgeInsets.all(20),
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 40, bottom: 40),
-                    child: Center(
-                      child: Text(
-                        "LogIn",
-                        style: TextStyle(
-                          fontSize: 32,
-                          fontWeight: FontWeight.bold,
-                        ),
+                  Center(
+                    child: Text(
+                      textAlign: TextAlign.center,
+                      "LogIn",
+                      style: TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
+                  SizedBox(height: 20),
                   TxtField(
-                    'Emale',
-                    'Login@example.com',
-                    false,
+                    labelText: 'Emale',
+                    hintText: 'Login@example.com',
+                    obscureText: false,
                     controller: emailController,
                   ),
                   TxtField(
-                    'Password',
-                    '*********',
-                    true,
+                    labelText: 'Password',
+                    hintText: '*********',
+                    obscureText: true,
                     controller: passwordController,
                   ),
 
@@ -92,6 +91,14 @@ class _LoginScreenState extends State<LoginScreen> {
                           passwordController.text.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
+                            backgroundColor: AppColors.orangeColor,
+                            duration: Duration(seconds: 2),
+                            // behavior: SnackBarBehavior.fixed,
+                            showCloseIcon: true,
+                            closeIconColor: AppColors.whiteColor,
+                            behavior: SnackBarBehavior.floating,
+                            elevation: 10,
+
                             content: Text('Please enter email and password'),
                           ),
                         );

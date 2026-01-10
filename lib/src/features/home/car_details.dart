@@ -8,6 +8,12 @@ class CarDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+        title: Text(car.name),
+        backgroundColor: car.sold ? Colors.green[100] : Colors.red[100],
+      ),
       backgroundColor: car.sold ? Colors.green[100] : Colors.red[100],
       body: Container(
         padding: const EdgeInsets.all(10),
@@ -18,10 +24,11 @@ class CarDetails extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               CircleAvatar(radius: 60, backgroundImage: AssetImage(car.photo)),
-              Text(car.name),
-              Text(car.brand),
-              Text(car.color),
-              Text(car.model.toString()),
+              SizedBox(height: 20),
+              Text(car.name, style: textStyle),
+              Text(car.brand, style: textStyle),
+              Text(car.color, style: textStyle),
+              Text(car.model.toString(), style: textStyle),
             ],
           ),
         ),
@@ -29,3 +36,9 @@ class CarDetails extends StatelessWidget {
     );
   }
 }
+
+TextStyle textStyle = TextStyle(
+  fontSize: 20,
+  fontWeight: FontWeight.bold,
+  color: Colors.black,
+);
