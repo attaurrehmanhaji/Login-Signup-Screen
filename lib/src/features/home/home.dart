@@ -244,7 +244,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   return GridView.builder(
                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      childAspectRatio: 0.68, // Adjusted for overflow
+                      childAspectRatio: 0.65, // Safer for overflow
                       mainAxisSpacing: 20,
                       crossAxisSpacing: 20,
                       crossAxisCount: 2,
@@ -280,7 +280,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         decoration: BoxDecoration(
           gradient: isSelected
               ? LinearGradient(
-                  colors: [AppColors.accentBlue, AppColors.accentPurple],
+                  colors: [
+                    AppColors.primaryGradientStart,
+                    AppColors.primaryGradientEnd,
+                  ],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 )
@@ -290,7 +293,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           boxShadow: [
             BoxShadow(
               color: isSelected
-                  ? AppColors.accentBlue.withOpacity(0.3)
+                  ? AppColors.primaryGradientStart.withOpacity(0.3)
                   : AppColors.shadowLight,
               blurRadius: 8,
               offset: Offset(0, 3),

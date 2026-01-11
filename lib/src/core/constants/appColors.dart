@@ -2,27 +2,33 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   static const whiteColor = Colors.white;
-  static const orangeColor = Color(0xFFFF8040);
-  static const lightOrangeColor = Color(0xFFFFEBDB);
-  static const grayColor = Color(0xff242424);
+  // Primary Brand Color (Deep Orange)
+  static const orangeColor = Color(0xFFFF6B00);
+  static const lightOrangeColor = Color(0xFFFFE0CC);
 
-  // Modern gradient colors
-  static const primaryGradientStart = Color(0xFFFF6B6B);
-  static const primaryGradientEnd = Color(0xFFFFB347);
-  static const secondaryGradientStart = Color(0xFF4ECDC4);
-  static const secondaryGradientEnd = Color(0xFF44A08D);
+  // Secondary / Text Colors
+  static const grayColor = Color(0xff2D3436); // Dark Slate
+  static const darkGrey = Color(0xFF636E72); // Light Slate
 
-  // Accent colors
-  static const accentBlue = Color(0xFF667EEA);
-  static const accentPurple = Color(0xFF764BA2);
-  static const darkBackground = Color(0xFF1A1A2E);
-  static const cardBackground = Color(0xFFF8F9FA);
+  // Modern gradient colors (Orange Theme)
+  static const primaryGradientStart = Color(0xFFFF6B00); // Orange
+  static const primaryGradientEnd = Color(0xFFFF9F43); // Lighter Orange
+
+  static const secondaryGradientStart = Color(0xFF2D3436); // Dark Slate
+  static const secondaryGradientEnd = Color(0xFF636E72); // Light Slate
+
+  // Accent colors (Simplified)
+  static const accentBlue = Color(0xFF0984E3); // Keep for some utility
+  static const accentPurple = Color(0xFF6C5CE7); // Keep for some utility
+
+  static const darkBackground = Color(0xFF1A1A2E); // Keep
+  static const cardBackground = Color(0xFFF5F6FA); // Very Light Grey
 
   // Status colors
-  static const successGreen = Color(0xFF06D6A0);
-  static const errorRed = Color(0xFFEF476F);
+  static const successGreen = Color(0xFF00B894);
+  static const errorRed = Color(0xFFD63031);
 
   // Shadow colors
-  static const shadowLight = Color(0x1A000000);
-  static const shadowMedium = Color(0x33000000);
+  static const shadowLight = Color(0x1A000000); // 10% black
+  static const shadowMedium = Color(0x33000000); // 20% black
 }
