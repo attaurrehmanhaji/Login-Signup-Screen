@@ -14,67 +14,67 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   List<CarsModel> car = [
     CarsModel(
-      name: 'City',
-      brand: "Honda",
-      color: 'Grey',
-      model: 2018,
-      photo: car1,
-      sold: false,
-    ),
-    CarsModel(
-      name: 'Civic',
-      brand: "Honda",
-      color: 'White',
-      model: 2018,
-      photo: car2,
-      sold: false,
-    ),
-    CarsModel(
-      name: 'Supra',
-      brand: "Toyota",
-      color: 'Mate Grey',
-      model: 2018,
-      photo: car3,
-      sold: true,
-    ),
-    CarsModel(
-      name: 'Camry',
-      brand: "Toyota",
-      color: 'Yellow',
-      model: 2018,
-      photo: car4,
-      sold: false,
-    ),
-    CarsModel(
-      name: 'Corolla',
-      brand: "Toyota",
-      color: 'White',
-      model: 2018,
-      photo: car5,
-      sold: true,
-    ),
-    CarsModel(
-      name: 'Mehran',
-      brand: "Suzuki",
-      color: 'Black',
-      model: 2018,
-      photo: car6,
-      sold: true,
-    ),
-    CarsModel(
-      name: 'BMW',
+      name: 'BMW M4',
       brand: "BMW",
-      color: 'White',
-      model: 2018,
+      color: 'Alpine White',
+      model: 2024,
       photo: car7,
       sold: false,
     ),
     CarsModel(
-      name: 'M3',
+      name: 'Supra MK5',
+      brand: "Toyota",
+      color: 'Prominence Red',
+      model: 2023,
+      photo: car3,
+      sold: false,
+    ),
+    CarsModel(
+      name: 'Civic Type R',
+      brand: "Honda",
+      color: 'Championship White',
+      model: 2024,
+      photo: car2,
+      sold: true,
+    ),
+    CarsModel(
+      name: 'Camry XSE',
+      brand: "Toyota",
+      color: 'Celestial Silver',
+      model: 2023,
+      photo: car4,
+      sold: false,
+    ),
+    CarsModel(
+      name: 'M5 CS',
       brand: "BMW",
-      color: 'Red',
-      model: 2018,
+      color: 'Frozen Brands Hatch Grey',
+      model: 2022,
       photo: car8,
+      sold: true,
+    ),
+    CarsModel(
+      name: 'City Aspire',
+      brand: "Honda",
+      color: 'Urban Titanium',
+      model: 2023,
+      photo: car1,
+      sold: true,
+    ),
+    CarsModel(
+      name: 'Corolla Altis',
+      brand: "Toyota",
+      color: 'Super White',
+      model: 2024,
+      photo: car5,
+      sold: false,
+    ),
+    CarsModel(
+      name: 'Alto VXL',
+      brand: "Suzuki",
+      color: 'Solid White',
+      model: 2024,
+      photo: car6,
       sold: true,
     ),
   ];
@@ -244,7 +244,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   return GridView.builder(
                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      childAspectRatio: 0.75,
+                      childAspectRatio: 0.68, // Adjusted for overflow
                       mainAxisSpacing: 20,
                       crossAxisSpacing: 20,
                       crossAxisCount: 2,
@@ -275,7 +275,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       child: AnimatedContainer(
         duration: Duration(milliseconds: 200),
         margin: EdgeInsets.only(right: 12),
-        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        padding: EdgeInsets.symmetric(horizontal: 20),
+
         decoration: BoxDecoration(
           gradient: isSelected
               ? LinearGradient(
@@ -296,12 +297,14 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             ),
           ],
         ),
-        child: Text(
-          category,
-          style: TextStyle(
-            color: isSelected ? Colors.white : AppColors.grayColor,
-            fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-            fontSize: 14,
+        child: Center(
+          child: Text(
+            category,
+            style: TextStyle(
+              color: isSelected ? Colors.white : AppColors.grayColor,
+              fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+              fontSize: 14,
+            ),
           ),
         ),
       ),
