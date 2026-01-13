@@ -80,6 +80,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   ];
 
   String selectedCategory = 'All';
+  String searchQuery = '';
   late AnimationController _animationController;
 
   @override
@@ -99,11 +100,29 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   }
 
   List<CarsModel> get filteredCars {
-    if (selectedCategory == 'All') return car;
-    if (selectedCategory == 'Available')
-      return car.where((c) => !c.sold).toList();
-    if (selectedCategory == 'Sold') return car.where((c) => c.sold).toList();
-    return car.where((c) => c.brand == selectedCategory).toList();
+    List<CarsModel> tempCars = car;
+
+    // Filter by Category
+    if (selectedCategory == 'Available') {
+      tempCars = tempCars.where((c) => !c.sold).toList();
+    } else if (selectedCategory == 'Sold') {
+      tempCars = tempCars.where((c) => c.sold).toList();
+    } else if (selectedCategory != 'All') {
+      tempCars = tempCars.where((c) => c.brand == selectedCategory).toList();
+    }
+
+    // Filter by Search Query
+    if (searchQuery.isNotEmpty) {
+      tempCars = tempCars
+          .where(
+            (c) =>
+                c.name.toLowerCase().contains(searchQuery.toLowerCase()) ||
+                c.brand.toLowerCase().contains(searchQuery.toLowerCase()),
+          )
+          .toList();
+    }
+
+    return tempCars;
   }
 
   @override
@@ -182,7 +201,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   SizedBox(height: 20),
                   // Search Bar
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                    padding: EdgeInsets.symmetric(horizontal: 10),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20),
@@ -194,24 +213,29 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         ),
                       ],
                     ),
-                    child: Row(
-                      children: [
-                        Icon(
+                    child: TextField(
+                      onChanged: (value) {
+                        setState(() {
+                          searchQuery = value;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Search for cars...',
+                        hintStyle: TextStyle(
+                          color: AppColors.grayColor.withOpacity(0.5),
+                          fontSize: 16,
+                        ),
+                        prefixIcon: Icon(
                           Icons.search,
                           color: AppColors.grayColor.withOpacity(0.5),
                         ),
-                        SizedBox(width: 12),
-                        Expanded(
-                          child: Text(
-                            'Search for cars...',
-                            style: TextStyle(
-                              color: AppColors.grayColor.withOpacity(0.5),
-                              fontSize: 16,
-                            ),
-                          ),
+                        suffixIcon: Icon(
+                          Icons.tune,
+                          color: AppColors.orangeColor,
                         ),
-                        Icon(Icons.tune, color: AppColors.orangeColor),
-                      ],
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.symmetric(vertical: 15),
+                      ),
                     ),
                   ),
                 ],
@@ -450,14 +474,17 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                 color: AppColors.orangeColor,
                               ),
                               SizedBox(width: 4),
-                              Text(
-                                myCars.color,
-                                style: TextStyle(
-                                  color: AppColors.grayColor.withOpacity(0.7),
-                                  fontSize: 12,
+                              Expanded(
+                                child: Text(
+                                  myCars.color,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    color: AppColors.grayColor.withOpacity(0.7),
+                                    fontSize: 12,
+                                  ),
                                 ),
                               ),
-                              Spacer(),
                               Container(
                                 padding: EdgeInsets.symmetric(
                                   horizontal: 8,

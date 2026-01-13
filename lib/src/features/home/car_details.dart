@@ -169,6 +169,7 @@ class _CarDetailsState extends State<CarDetails> {
           Positioned.fill(
             top: MediaQuery.of(context).size.height * 0.4 - 30,
             child: Container(
+              clipBehavior: Clip.hardEdge,
               decoration: BoxDecoration(
                 color: AppColors.cardBackground,
                 borderRadius: BorderRadius.only(
