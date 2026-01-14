@@ -155,10 +155,14 @@ class _OrdersScreenState extends State<OrdersScreen> {
           boxShadow: [
             BoxShadow(
               color: AppColors.shadowLight,
-              blurRadius: 10,
-              offset: Offset(0, 3),
+              blurRadius: 15,
+              offset: Offset(0, 5),
             ),
           ],
+          border: Border.all(
+            color: _getStatusColor(order.status).withOpacity(0.3),
+            width: 1,
+          ),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -166,44 +170,59 @@ class _OrdersScreenState extends State<OrdersScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  'Order #${order.orderId}',
-                  style: TextStyle(
-                    color: AppColors.grayColor,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Order #${order.orderId}',
+                      style: TextStyle(
+                        color: AppColors.blackColor,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 4),
+                    Text(
+                      dateFormat.format(order.orderDate),
+                      style: TextStyle(
+                        color: AppColors.grayColor.withOpacity(0.6),
+                        fontSize: 12,
+                      ),
+                    ),
+                  ],
                 ),
                 _buildStatusBadge(order.status),
               ],
             ),
-            SizedBox(height: 10),
-            Text(
-              dateFormat.format(order.orderDate),
-              style: TextStyle(
-                color: AppColors.grayColor.withOpacity(0.6),
-                fontSize: 14,
-              ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12.0),
+              child: Divider(color: AppColors.grayColor.withOpacity(0.1)),
             ),
-            SizedBox(height: 10),
-            Text(
-              '${order.items.length} item${order.items.length > 1 ? 's' : ''}',
-              style: TextStyle(
-                color: AppColors.grayColor.withOpacity(0.7),
-                fontSize: 14,
-              ),
-            ),
-            SizedBox(height: 10),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                Icon(
+                  Icons.shopping_bag_outlined,
+                  size: 16,
+                  color: AppColors.orangeColor,
+                ),
+                SizedBox(width: 8),
+                Text(
+                  '${order.items.length} item${order.items.length > 1 ? 's' : ''}',
+                  style: TextStyle(
+                    color: AppColors.grayColor,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                Spacer(),
                 Text(
                   'Total',
                   style: TextStyle(
                     color: AppColors.grayColor.withOpacity(0.6),
-                    fontSize: 14,
+                    fontSize: 12,
                   ),
                 ),
+                SizedBox(width: 8),
                 Text(
                   currencyFormat.format(order.totalAmount),
                   style: TextStyle(
@@ -247,16 +266,34 @@ class _OrdersScreenState extends State<OrdersScreen> {
       padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
         color: color.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: color, width: 1),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: color.withOpacity(0.5), width: 1),
+        boxShadow: [
+          BoxShadow(
+            color: color.withOpacity(0.2),
+            blurRadius: 4,
+            offset: Offset(0, 2),
+          ),
+        ],
       ),
-      child: Text(
-        _getStatusText(status),
-        style: TextStyle(
-          color: color,
-          fontSize: 12,
-          fontWeight: FontWeight.bold,
-        ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 6,
+            height: 6,
+            decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+          ),
+          SizedBox(width: 6),
+          Text(
+            _getStatusText(status),
+            style: TextStyle(
+              color: color,
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -290,6 +327,23 @@ class _OrdersScreenState extends State<OrdersScreen> {
         return OrderStatus.delivered;
       default:
         return OrderStatus.pending;
+    }
+  }
+
+  Color _getStatusColor(OrderStatus status) {
+    switch (status) {
+      case OrderStatus.pending:
+        return Colors.orange;
+      case OrderStatus.confirmed:
+        return Colors.blue;
+      case OrderStatus.processing:
+        return Colors.purple;
+      case OrderStatus.shipped:
+        return Colors.indigo;
+      case OrderStatus.delivered:
+        return AppColors.successGreen;
+      case OrderStatus.cancelled:
+        return AppColors.errorRed;
     }
   }
 

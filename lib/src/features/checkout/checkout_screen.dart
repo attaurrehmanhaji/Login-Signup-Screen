@@ -176,32 +176,80 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     _selectedAddress = demoAddress;
 
     return Container(
-      padding: EdgeInsets.all(16),
+      padding: EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: AppColors.orangeColor, width: 2),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: AppColors.orangeColor.withOpacity(0.5),
+          width: 1,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.orangeColor.withOpacity(0.1),
+            blurRadius: 10,
+            offset: Offset(0, 5),
+          ),
+        ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Row(
         children: [
-          Text(
-            demoAddress.fullName,
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: AppColors.grayColor,
+          Container(
+            padding: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: AppColors.lightOrangeColor.withOpacity(0.2),
+              shape: BoxShape.circle,
             ),
+            child: Icon(Icons.location_on, color: AppColors.orangeColor),
           ),
-          SizedBox(height: 8),
-          Text(
-            demoAddress.fullAddress,
-            style: TextStyle(color: AppColors.grayColor.withOpacity(0.7)),
-          ),
-          SizedBox(height: 4),
-          Text(
-            demoAddress.phoneNumber,
-            style: TextStyle(color: AppColors.grayColor.withOpacity(0.7)),
+          SizedBox(width: 15),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      demoAddress.fullName,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.blackColor,
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: AppColors.orangeColor.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Text(
+                        'Default',
+                        style: TextStyle(
+                          fontSize: 10,
+                          color: AppColors.orangeColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 8),
+                Text(
+                  demoAddress.fullAddress,
+                  style: TextStyle(color: AppColors.grayColor.withOpacity(0.8)),
+                ),
+                SizedBox(height: 4),
+                Text(
+                  demoAddress.phoneNumber,
+                  style: TextStyle(
+                    color: AppColors.grayColor.withOpacity(0.6),
+                    fontSize: 12,
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),

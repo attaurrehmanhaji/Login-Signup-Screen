@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../core/constants/appColors.dart';
-import '../../model/product_model.dart';
+
 import '../../providers/favorites_provider.dart';
 
 class FavoritesScreen extends StatelessWidget {
@@ -45,13 +45,27 @@ class FavoritesScreen extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(40),
             decoration: BoxDecoration(
-              color: AppColors.lightOrangeColor.withOpacity(0.2),
+              gradient: LinearGradient(
+                colors: [
+                  AppColors.lightOrangeColor.withOpacity(0.5),
+                  AppColors.lightOrangeColor.withOpacity(0.1),
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
               shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.orangeColor.withOpacity(0.2),
+                  blurRadius: 20,
+                  offset: Offset(0, 10),
+                ),
+              ],
             ),
             child: Icon(
               Icons.favorite_border,
               size: 80,
-              color: AppColors.orangeColor.withOpacity(0.5),
+              color: AppColors.orangeColor,
             ),
           ),
           SizedBox(height: 30),
@@ -80,6 +94,8 @@ class FavoritesScreen extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
               ),
+              elevation: 8,
+              shadowColor: AppColors.orangeColor.withOpacity(0.4),
             ),
             child: Text(
               'Browse Products',

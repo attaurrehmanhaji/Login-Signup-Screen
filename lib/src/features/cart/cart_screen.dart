@@ -74,13 +74,27 @@ class CartScreen extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(40),
             decoration: BoxDecoration(
-              color: AppColors.lightOrangeColor.withOpacity(0.2),
+              gradient: LinearGradient(
+                colors: [
+                  AppColors.lightOrangeColor.withOpacity(0.5),
+                  AppColors.lightOrangeColor.withOpacity(0.1),
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
               shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.orangeColor.withOpacity(0.2),
+                  blurRadius: 20,
+                  offset: Offset(0, 10),
+                ),
+              ],
             ),
             child: Icon(
               Icons.shopping_cart_outlined,
               size: 80,
-              color: AppColors.orangeColor.withOpacity(0.5),
+              color: AppColors.orangeColor,
             ),
           ),
           SizedBox(height: 30),
@@ -94,7 +108,7 @@ class CartScreen extends StatelessWidget {
           ),
           SizedBox(height: 10),
           Text(
-            'Add some products to get started',
+            'Add some premium rides to get started',
             style: TextStyle(
               color: AppColors.grayColor.withOpacity(0.6),
               fontSize: 16,
@@ -109,6 +123,8 @@ class CartScreen extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
               ),
+              elevation: 8,
+              shadowColor: AppColors.orangeColor.withOpacity(0.4),
             ),
             child: Text(
               'Start Shopping',

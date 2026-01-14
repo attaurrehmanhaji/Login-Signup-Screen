@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:badges/badges.dart' as badges;
 import '../cart/cart_screen.dart';
 import '../../providers/cart_provider.dart';
+import 'widgets/product_skeleton.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -97,15 +98,24 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   String selectedCategory = 'All';
   String searchQuery = '';
   late AnimationController _animationController;
+  bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 300),
     );
-    _animationController.forward();
+    _simulateLoading();
+  }
+
+  Future<void> _simulateLoading() async {
+    // Simulate network delay for premium feeling
+    await Future.delayed(Duration(seconds: 3));
+    if (mounted) {
+      setState(() => _isLoading = false);
+    }
   }
 
   @override
@@ -323,25 +333,44 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             SizedBox(height: 15),
             // Car Grid
             Expanded(
-              child: AnimatedBuilder(
-                animation: _animationController,
-                builder: (context, child) {
-                  return GridView.builder(
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      childAspectRatio: 0.65, // Safer for overflow
-                      mainAxisSpacing: 20,
-                      crossAxisSpacing: 20,
-                      crossAxisCount: 2,
+              child: _isLoading
+                  ? GridView.builder(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 10,
+                      ),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        childAspectRatio: 0.65,
+                        mainAxisSpacing: 20,
+                        crossAxisSpacing: 20,
+                        crossAxisCount: 2,
+                      ),
+                      itemCount: 6,
+                      itemBuilder: (context, index) => ProductSkeleton(),
+                    )
+                  : AnimatedBuilder(
+                      animation: _animationController,
+                      builder: (context, child) {
+                        return GridView.builder(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 10,
+                          ),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                childAspectRatio: 0.65,
+                                mainAxisSpacing: 20,
+                                crossAxisSpacing: 20,
+                                crossAxisCount: 2,
+                              ),
+                          itemCount: filteredCars.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            ProductModel myProduct = filteredCars[index];
+                            return _buildCarCard(myProduct, index);
+                          },
+                        );
+                      },
                     ),
-                    itemCount: filteredCars.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      ProductModel myProduct = filteredCars[index];
-                      return _buildCarCard(myProduct, index);
-                    },
-                  );
-                },
-              ),
             ),
           ],
         ),

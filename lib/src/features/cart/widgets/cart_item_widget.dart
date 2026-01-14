@@ -65,6 +65,13 @@ class CartItemWidget extends StatelessWidget {
               height: 90,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.shadowLight,
+                    blurRadius: 8,
+                    offset: Offset(0, 4),
+                  ),
+                ],
                 gradient: LinearGradient(
                   colors: [
                     AppColors.secondaryGradientStart.withOpacity(0.3),
@@ -77,7 +84,7 @@ class CartItemWidget extends StatelessWidget {
                 child: Image.asset(item.product.photo, fit: BoxFit.cover),
               ),
             ),
-            SizedBox(width: 12),
+            SizedBox(width: 15),
             // Product Details
             Expanded(
               child: Column(
