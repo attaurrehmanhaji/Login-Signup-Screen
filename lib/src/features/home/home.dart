@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:login_signin_screens/src/core/constants/appAssets.dart';
 import 'package:login_signin_screens/src/core/constants/appColors.dart';
+import 'package:login_signin_screens/src/features/home/widgets/banner_carousel.dart';
 import 'package:login_signin_screens/src/features/home/product_details.dart';
 import 'package:login_signin_screens/src/model/product_model.dart';
 import 'package:provider/provider.dart';
 import 'package:badges/badges.dart' as badges;
 import '../cart/cart_screen.dart';
-import '../favorites/favorites_screen.dart';
-import '../profile/profile_screen.dart';
 import '../../providers/cart_provider.dart';
 
 class Home extends StatefulWidget {
@@ -301,6 +300,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               ),
             ),
             SizedBox(height: 20),
+            // Promotional Banner Carousel
+            BannerCarousel(),
+            SizedBox(height: 20),
             // Category Chips
             Container(
               height: 50,
@@ -334,8 +336,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     ),
                     itemCount: filteredCars.length,
                     itemBuilder: (BuildContext context, int index) {
-                      CarsModel myCars = filteredCars[index];
-                      return _buildCarCard(myCars, index);
+                      ProductModel myProduct = filteredCars[index];
+                      return _buildCarCard(myProduct, index);
                     },
                   );
                 },

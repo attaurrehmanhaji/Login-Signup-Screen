@@ -7,6 +7,8 @@ import 'src/providers/cart_provider.dart';
 import 'src/providers/favorites_provider.dart';
 import 'src/providers/user_provider.dart';
 import 'src/providers/orders_provider.dart';
+import 'src/providers/reviews_provider.dart';
+import 'src/providers/notifications_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,6 +29,8 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(create: (_) => UserProvider()..loadUser()),
         ChangeNotifierProvider(create: (_) => OrdersProvider()..loadOrders()),
+        ChangeNotifierProvider(create: (_) => ReviewsProvider()),
+        ChangeNotifierProvider(create: (_) => NotificationsProvider()),
       ],
       child: ScreenUtilInit(
         designSize: Size(375, 812),

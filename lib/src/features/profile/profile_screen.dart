@@ -4,6 +4,9 @@ import '../../core/constants/appColors.dart';
 import '../../providers/user_provider.dart';
 import '../../providers/orders_provider.dart';
 import '../orders/orders_screen.dart';
+import 'addresses_screen.dart';
+import 'payment_methods_screen.dart';
+import 'settings_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -113,8 +116,9 @@ class ProfileScreen extends StatelessWidget {
               subtitle: '${userProvider.addresses.length} saved addresses',
               onTap: () {
                 // TODO: Navigate to addresses screen
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Addresses screen coming soon')),
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AddressesScreen()),
                 );
               },
             ),
@@ -124,9 +128,11 @@ class ProfileScreen extends StatelessWidget {
               title: 'Payment Methods',
               subtitle: 'Manage your cards',
               onTap: () {
-                // TODO: Navigate to payment methods screen
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Payment methods screen coming soon')),
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PaymentMethodsScreen(),
+                  ),
                 );
               },
             ),
@@ -136,9 +142,9 @@ class ProfileScreen extends StatelessWidget {
               title: 'Settings',
               subtitle: 'App preferences',
               onTap: () {
-                // TODO: Navigate to settings screen
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Settings screen coming soon')),
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SettingsScreen()),
                 );
               },
             ),

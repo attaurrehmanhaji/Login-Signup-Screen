@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   static const whiteColor = Colors.white;
+  static const blackColor = Colors.black;
   // Primary Brand Color (Deep Orange)
   static const orangeColor = Color(0xFFFF6B00);
   static const lightOrangeColor = Color(0xFFFFE0CC);

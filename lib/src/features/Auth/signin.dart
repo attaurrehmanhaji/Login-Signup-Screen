@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:login_signin_screens/src/core/constants/appColors.dart';
 import 'package:login_signin_screens/src/features/Auth/login.dart';
-import 'package:login_signin_screens/src/features/home/home.dart';
+import 'package:login_signin_screens/src/features/main_navigation/main_navigation_screen.dart';
 
 import 'package:login_signin_screens/src/shared/widgets/appButtan.dart';
 import 'package:login_signin_screens/src/shared/widgets/noAccount.dart';
@@ -112,7 +112,9 @@ class _SigninScreenState extends State<SigninScreen> {
                     print('Sign Up');
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Home()),
+                      MaterialPageRoute(
+                        builder: (context) => MainNavigationScreen(),
+                      ),
                     );
                   },
                 ),

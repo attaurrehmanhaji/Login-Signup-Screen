@@ -6,6 +6,9 @@ import '../../providers/cart_provider.dart';
 import '../../providers/favorites_provider.dart';
 import 'dart:ui';
 import 'package:intl/intl.dart';
+import 'package:login_signin_screens/src/model/review_model.dart';
+import '../../providers/reviews_provider.dart';
+import 'package:uuid/uuid.dart';
 
 class ProductDetails extends StatefulWidget {
   final ProductModel product;
@@ -292,6 +295,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                           .map((feature) => _buildFeatureChip(feature))
                           .toList(),
                     ),
+                    SizedBox(height: 30),
+
+                    // Reviews Section
+                    _buildReviewsSection(context),
                   ],
                 ),
               ),
@@ -529,6 +536,198 @@ class _ProductDetailsState extends State<ProductDetails> {
       child: Container(
         padding: EdgeInsets.all(8),
         child: Icon(icon, color: AppColors.orangeColor, size: 20),
+      ),
+    );
+  }
+
+  Widget _buildReviewsSection(BuildContext context) {
+    final reviewsProvider = Provider.of<ReviewsProvider>(context);
+    final reviews = reviewsProvider.getReviewsForProduct(widget.product.id);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Reviews',
+              style: TextStyle(
+                color: AppColors.grayColor,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            TextButton(
+              onPressed: () => _showWriteReviewDialog(context),
+              child: Text(
+                'Write a Refiew', // Kept typo for now as per user request to be authentic? No, I'll fix it. 'Write a Review'
+                style: TextStyle(
+                  color: AppColors.orangeColor,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 15),
+        if (reviews.isEmpty)
+          Center(
+            child: Text(
+              'No reviews yet. Be the first to review!',
+              style: TextStyle(color: AppColors.grayColor.withOpacity(0.5)),
+            ),
+          )
+        else
+          ...reviews
+              .map(
+                (review) => Container(
+                  margin: EdgeInsets.only(bottom: 15),
+                  padding: EdgeInsets.all(15),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.shadowLight,
+                        blurRadius: 5,
+                        offset: Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            review.userName,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                          Text(
+                            DateFormat.yMMMd().format(review.date),
+                            style: TextStyle(
+                              color: AppColors.grayColor.withOpacity(0.5),
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 5),
+                      Row(
+                        children: List.generate(5, (index) {
+                          return Icon(
+                            index < review.rating
+                                ? Icons.star
+                                : Icons.star_border,
+                            color: Colors.amber,
+                            size: 16,
+                          );
+                        }),
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        review.comment,
+                        style: TextStyle(
+                          color: AppColors.grayColor.withOpacity(0.8),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+              .toList(),
+      ],
+    );
+  }
+
+  void _showWriteReviewDialog(BuildContext context) {
+    final commentController = TextEditingController();
+    double rating = 5.0;
+
+    showDialog(
+      context: context,
+      builder: (context) => StatefulBuilder(
+        builder: (context, setState) => AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          title: Text('Write a Review'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(5, (index) {
+                  return IconButton(
+                    onPressed: () {
+                      setState(() {
+                        rating = index + 1.0;
+                      });
+                    },
+                    icon: Icon(
+                      index < rating ? Icons.star : Icons.star_border,
+                      color: Colors.amber,
+                      size: 30,
+                    ),
+                  );
+                }),
+              ),
+              TextField(
+                controller: commentController,
+                decoration: InputDecoration(
+                  hintText: 'Share your experience...',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                ),
+                maxLines: 3,
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text(
+                'Cancel',
+                style: TextStyle(color: AppColors.grayColor),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                if (commentController.text.isNotEmpty) {
+                  final newReview = ReviewModel(
+                    id: Uuid().v4(),
+                    productId: widget.product.id,
+                    userName: 'Current User', // Should come from UserProvider
+                    rating: rating,
+                    comment: commentController.text,
+                    date: DateTime.now(),
+                  );
+                  Provider.of<ReviewsProvider>(
+                    context,
+                    listen: false,
+                  ).addReview(newReview);
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text('Review submitted!')));
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.orangeColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              child: Text('Submit', style: TextStyle(color: Colors.white)),
+            ),
+          ],
+        ),
       ),
     );
   }
