@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:login_signin_screens/src/core/constants/appAssets.dart';
 import 'package:login_signin_screens/src/core/constants/appColors.dart';
-import 'package:login_signin_screens/src/features/home/car_details.dart';
-import 'package:login_signin_screens/src/model/cars_model.dart';
+import 'package:login_signin_screens/src/features/home/product_details.dart';
+import 'package:login_signin_screens/src/model/product_model.dart';
+import 'package:provider/provider.dart';
+import 'package:badges/badges.dart' as badges;
+import '../cart/cart_screen.dart';
+import '../favorites/favorites_screen.dart';
+import '../profile/profile_screen.dart';
+import '../../providers/cart_provider.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -12,70 +18,80 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
-  List<CarsModel> car = [
-    CarsModel(
+  int _selectedIndex = 0;
+
+  List<ProductModel> products = [
+    ProductModel.fromCarsModel(
       name: 'BMW M4',
       brand: "BMW",
       color: 'Alpine White',
       model: 2024,
       photo: car7,
       sold: false,
+      price: 75000,
     ),
-    CarsModel(
+    ProductModel.fromCarsModel(
       name: 'Supra MK5',
       brand: "Toyota",
       color: 'Prominence Red',
       model: 2023,
       photo: car3,
       sold: false,
+      price: 55000,
     ),
-    CarsModel(
+    ProductModel.fromCarsModel(
       name: 'Civic Type R',
       brand: "Honda",
       color: 'Championship White',
       model: 2024,
       photo: car2,
       sold: true,
+      price: 45000,
     ),
-    CarsModel(
+    ProductModel.fromCarsModel(
       name: 'Camry XSE',
       brand: "Toyota",
       color: 'Celestial Silver',
       model: 2023,
       photo: car4,
       sold: false,
+      price: 35000,
     ),
-    CarsModel(
+    ProductModel.fromCarsModel(
       name: 'M5 CS',
       brand: "BMW",
       color: 'Frozen Brands Hatch Grey',
       model: 2022,
       photo: car8,
       sold: true,
+      price: 95000,
     ),
-    CarsModel(
+    ProductModel.fromCarsModel(
       name: 'City Aspire',
       brand: "Honda",
       color: 'Urban Titanium',
       model: 2023,
       photo: car1,
       sold: true,
+      price: 22000,
     ),
-    CarsModel(
+    ProductModel.fromCarsModel(
       name: 'Corolla Altis',
       brand: "Toyota",
       color: 'Super White',
       model: 2024,
       photo: car5,
       sold: false,
+      price: 28000,
     ),
-    CarsModel(
+    ProductModel.fromCarsModel(
       name: 'Alto VXL',
       brand: "Suzuki",
       color: 'Solid White',
       model: 2024,
       photo: car6,
       sold: true,
+      price: 12000,
     ),
   ];
 
@@ -99,8 +115,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     super.dispose();
   }
 
-  List<CarsModel> get filteredCars {
-    List<CarsModel> tempCars = car;
+  List<ProductModel> get filteredCars {
+    List<ProductModel> tempCars = products;
 
     // Filter by Category
     if (selectedCategory == 'Available') {
@@ -127,6 +143,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final cartProvider = Provider.of<CartProvider>(context);
+
     return Scaffold(
       backgroundColor: AppColors.cardBackground,
       body: SafeArea(
@@ -184,17 +202,58 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                           ),
                         ],
                       ),
-                      Container(
-                        padding: EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.2),
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Icon(
-                          Icons.notifications_outlined,
-                          color: Colors.white,
-                          size: 28,
-                        ),
+                      Row(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.2),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Icon(
+                              Icons.notifications_outlined,
+                              color: Colors.white,
+                              size: 28,
+                            ),
+                          ),
+                          SizedBox(width: 10),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => CartScreen(),
+                                ),
+                              );
+                            },
+                            child: badges.Badge(
+                              badgeContent: Text(
+                                '${cartProvider.itemCount}',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              showBadge: cartProvider.itemCount > 0,
+                              badgeStyle: badges.BadgeStyle(
+                                badgeColor: AppColors.errorRed,
+                              ),
+                              child: Container(
+                                padding: EdgeInsets.all(12),
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withOpacity(0.2),
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                child: Icon(
+                                  Icons.shopping_cart_outlined,
+                                  color: Colors.white,
+                                  size: 28,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -338,7 +397,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     );
   }
 
-  Widget _buildCarCard(CarsModel myCars, int index) {
+  Widget _buildCarCard(ProductModel myProduct, int index) {
     return TweenAnimationBuilder(
       duration: Duration(milliseconds: 300 + (index * 100)),
       tween: Tween<double>(begin: 0, end: 1),
@@ -352,7 +411,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => CarDetails(car: myCars),
+                    builder: (context) => ProductDetails(product: myProduct),
                   ),
                 );
               },
@@ -398,7 +457,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                               topRight: Radius.circular(25),
                             ),
                             child: Image.asset(
-                              myCars.photo,
+                              myProduct.photo,
                               fit: BoxFit.cover,
                               width: double.infinity,
                             ),
@@ -413,14 +472,14 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                               vertical: 6,
                             ),
                             decoration: BoxDecoration(
-                              color: myCars.sold
+                              color: myProduct.sold
                                   ? AppColors.errorRed
                                   : AppColors.successGreen,
                               borderRadius: BorderRadius.circular(20),
                               boxShadow: [
                                 BoxShadow(
                                   color:
-                                      (myCars.sold
+                                      (myProduct.sold
                                               ? AppColors.errorRed
                                               : AppColors.successGreen)
                                           .withOpacity(0.4),
@@ -430,7 +489,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                               ],
                             ),
                             child: Text(
-                              myCars.sold ? 'SOLD' : 'AVAILABLE',
+                              myProduct.sold ? 'SOLD' : 'AVAILABLE',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 10,
@@ -449,7 +508,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            myCars.brand,
+                            myProduct.brand,
                             style: TextStyle(
                               color: AppColors.grayColor.withOpacity(0.6),
                               fontSize: 12,
@@ -458,7 +517,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                           ),
                           SizedBox(height: 4),
                           Text(
-                            myCars.name,
+                            myProduct.name,
                             style: TextStyle(
                               color: AppColors.grayColor,
                               fontSize: 18,
@@ -476,7 +535,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                               SizedBox(width: 4),
                               Expanded(
                                 child: Text(
-                                  myCars.color,
+                                  myProduct.color,
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
@@ -503,7 +562,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: Text(
-                                  myCars.model.toString(),
+                                  myProduct.year.toString(),
                                   style: TextStyle(
                                     color: AppColors.orangeColor,
                                     fontSize: 12,
