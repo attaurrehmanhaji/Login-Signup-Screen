@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../core/constants/appColors.dart';
 import '../../providers/cart_provider.dart';
+import '../../providers/navigation_provider.dart';
 import 'widgets/cart_item_widget.dart';
 import '../checkout/checkout_screen.dart';
 import 'package:intl/intl.dart';
@@ -22,10 +23,6 @@ class CartScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: AppColors.grayColor),
-          onPressed: () => Navigator.pop(context),
-        ),
         title: Text(
           'Shopping Cart',
           style: TextStyle(
@@ -116,7 +113,10 @@ class CartScreen extends StatelessWidget {
           ),
           SizedBox(height: 30),
           ElevatedButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => Provider.of<NavigationProvider>(
+              context,
+              listen: false,
+            ).goToHome(),
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.orangeColor,
               padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),

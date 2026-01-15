@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:login_signin_screens/src/core/constants/appAssets.dart';
 import 'package:login_signin_screens/src/core/constants/appColors.dart';
 import 'package:login_signin_screens/src/features/home/widgets/banner_carousel.dart';
 import 'package:login_signin_screens/src/features/home/product_details.dart';
@@ -8,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:badges/badges.dart' as badges;
 import '../cart/cart_screen.dart';
 import '../../providers/cart_provider.dart';
+import '../../providers/products_provider.dart';
 import 'widgets/product_skeleton.dart';
 
 class Home extends StatefulWidget {
@@ -18,82 +18,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
-  int _selectedIndex = 0;
 
-  List<ProductModel> products = [
-    ProductModel.fromCarsModel(
-      name: 'BMW M4',
-      brand: "BMW",
-      color: 'Alpine White',
-      model: 2024,
-      photo: car7,
-      sold: false,
-      price: 75000,
-    ),
-    ProductModel.fromCarsModel(
-      name: 'Supra MK5',
-      brand: "Toyota",
-      color: 'Prominence Red',
-      model: 2023,
-      photo: car3,
-      sold: false,
-      price: 55000,
-    ),
-    ProductModel.fromCarsModel(
-      name: 'Civic Type R',
-      brand: "Honda",
-      color: 'Championship White',
-      model: 2024,
-      photo: car2,
-      sold: true,
-      price: 45000,
-    ),
-    ProductModel.fromCarsModel(
-      name: 'Camry XSE',
-      brand: "Toyota",
-      color: 'Celestial Silver',
-      model: 2023,
-      photo: car4,
-      sold: false,
-      price: 35000,
-    ),
-    ProductModel.fromCarsModel(
-      name: 'M5 CS',
-      brand: "BMW",
-      color: 'Frozen Brands Hatch Grey',
-      model: 2022,
-      photo: car8,
-      sold: true,
-      price: 95000,
-    ),
-    ProductModel.fromCarsModel(
-      name: 'City Aspire',
-      brand: "Honda",
-      color: 'Urban Titanium',
-      model: 2023,
-      photo: car1,
-      sold: true,
-      price: 22000,
-    ),
-    ProductModel.fromCarsModel(
-      name: 'Corolla Altis',
-      brand: "Toyota",
-      color: 'Super White',
-      model: 2024,
-      photo: car5,
-      sold: false,
-      price: 28000,
-    ),
-    ProductModel.fromCarsModel(
-      name: 'Alto VXL',
-      brand: "Suzuki",
-      color: 'Solid White',
-      model: 2024,
-      photo: car6,
-      sold: true,
-      price: 12000,
-    ),
-  ];
+  List<ProductModel> products = [];
 
   String selectedCategory = 'All';
   String searchQuery = '';
@@ -114,7 +40,14 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     // Simulate network delay for premium feeling
     await Future.delayed(Duration(seconds: 3));
     if (mounted) {
-      setState(() => _isLoading = false);
+      final productsProvider = Provider.of<ProductsProvider>(
+        context,
+        listen: false,
+      );
+      setState(() {
+        products = productsProvider.products;
+        _isLoading = false;
+      });
     }
   }
 
